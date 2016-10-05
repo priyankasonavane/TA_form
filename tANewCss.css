@@ -1,0 +1,74 @@
+/*
+ Student Info: SonavanePriyanka, ID=17080
+ Subject:CS557(C)_HWNO1_Summer_2015
+Author: administrator
+Filename: tANewCss.css
+Date and Time: Jun 3, 2016 1:10:44 PM
+Project Name: webfrontFIrstHomework
+*/
+/* 
+    Created on : Jun 3, 2016, 1:10:44 PM
+    Author     : administrator
+*/
+
+
+*{
+   margin:0px;
+   padding :1px;
+    list-style-type:disc;
+    
+}
+header,section,footer,aside{
+    display:block;
+}
+.container{
+    width:1000px;
+    margin:18px auto;
+    padding:15px;
+    background-image: url("wallpaper.jpeg");
+    
+    
+}
+.clear{
+    clear:both;
+}
+.top_nav{
+    float:left;
+    width:300px;
+    height: 700px;
+    
+}
+.right-side{
+    height:100px;
+    width: 400px;
+    float:left;
+   
+    
+}
+.page_footer{
+    clear:both
+}
+.boxed{
+    border: 1px solid black ;
+    width: 1000px;
+    height: 100px;
+    color: infobackground;
+    font-style: normal;
+    font-weight: 900;
+    font-family: cursive;
+    font-size: 1cm;
+    background-color: grey;
+ 
+}
+.boxfortable{
+     border:1px solid black ;
+     line-height: 1.5;
+}
+.boxforbutton{
+     border:1px solid black ;
+     line-height:2; 
+     background-color: green;
+}
+.bodylayout{
+   padding:30px; 
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--
+ Student Info: SonavanePriyanka, ID=17080
+ Subject:CS557(C)_HWNO1_Summer_2015
+Author: administrator
+Filename: designingTAForm.html
+Date and Time: Jun 3, 2016 1:09:28 PM
+Project Name: webfrontFIrstHomework
+-->
+<html>
+    <head>
+        <title> TA Management System @Northwestern Polytechnic University</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="tANewCss.css"/>
+        <link rel="shortcut icon" href="">
+        <script language="JavaScript">
+            var arrayStudent = [];
+            var studentLogs = [];
+            var counter = 0;
+            var isUpdate = false;
+
+            function disableAllButtons(){
+                document.getElementById("edit").disabled = true;
+                document.getElementById("del").disabled = true;
+                document.getElementById("first").disabled = true;
+                document.getElementById("last").disabled = true;
+                document.getElementById("prev").disabled = true;
+                document.getElementById("next").disabled = true;
+                document.getElementById("select").disabled = true;
+                document.getElementById("cancel").disabled = true;                
+                document.getElementById("save").disabled = true;
+            }
+
+            function enableAllButtons(){
+                document.getElementById('add').removeAttribute('disabled');
+                document.getElementById('edit').removeAttribute('disabled');
+                document.getElementById('del').removeAttribute('disabled');
+                document.getElementById('first').removeAttribute('disabled');                
+                document.getElementById('last').removeAttribute('disabled');
+                document.getElementById('prev').removeAttribute('disabled');
+                document.getElementById('next').removeAttribute('disabled');
+                document.getElementById('select').removeAttribute('disabled');
+                document.getElementById('cancel').removeAttribute('disabled');
+                document.getElementById('save').removeAttribute('disabled');
+            }            
+
+            function enableTextFields(){
+                document.getElementById('firstName').removeAttribute('disabled');
+                document.getElementById('lastName').removeAttribute('disabled');
+                document.getElementById('number').removeAttribute('disabled');
+                document.getElementById('area').removeAttribute('disabled');
+                document.getElementById('isSelected').removeAttribute('disabled');                
+            }
+
+            function disableTextFields(){
+                document.getElementById("firstName").disabled = true;
+                document.getElementById("lastName").disabled = true;
+                document.getElementById("number").disabled = true;
+                document.getElementById("area").disabled = true;                
+                document.getElementById("isSelected").disabled = true;
+            }            
+
+            function editInfo() {
+                enableTextFields();
+                disableAllButtons();
+                document.getElementById("add").disabled = true;
+                document.getElementById('save').removeAttribute('disabled');
+                document.getElementById('cancel').removeAttribute('disabled');
+                isUpdate = true;                
+            }
+
+            function persistData(firstname, lastname, studentid, areaofspecialization, selected){
+                if(isUpdate){
+                    var studentInfo = "\nUpdated: " + firstname + ",";
+                    studentInfo += lastname + ",";
+                    studentInfo += studentid + ",";
+                    studentInfo += areaofspecialization + ",";
+                    studentInfo += selected; 
+                    var studentsSize = arrayStudent.length;
+                    var currentSelected = counter-1; 
+                    if(studentsSize > 0 && counter > 0){  
+                        arrayStudent[currentSelected].firstName = firstname;
+                        arrayStudent[currentSelected].lastName =lastname;
+                        arrayStudent[currentSelected].number = studentid;
+                        arrayStudent[currentSelected].area = areaofspecialization;
+                        arrayStudent[currentSelected].select = selected;
+                        enableAllButtons();
+                        document.getElementById("cancel").disabled = true;                
+                        document.getElementById("save").disabled = true;  
+                        disableTextFields();              
+                        return studentInfo;
+                    }                    
+                }else{
+                    var studentInfo = "\nAdded: " + firstname + ",";
+                    studentInfo += lastname + ",";
+                    studentInfo += studentid + ",";
+                    studentInfo += areaofspecialization + ",";
+                    studentInfo += selected; 
+                    var studInfo = {firstName: firstname, lastName: lastname, number: studentid, area: areaofspecialization, select: selected};
+                    arrayStudent.push(studInfo);
+                    counter++;
+                    enableAllButtons();
+                    document.getElementById("cancel").disabled = true;                
+                    document.getElementById("save").disabled = true;  
+                    disableTextFields();              
+                    return studentInfo;
+                }
+                isUpdate = false;
+            }
+
+            function removeStudent(){
+                var studentsSize = arrayStudent.length;
+                var currentSelected = counter-1;   
+                if(studentsSize > 0 && counter > 0){ 
+                    var studentInfo = "\nRemoved: " + arrayStudent[currentSelected].firstName + ",";
+                    studentInfo += arrayStudent[currentSelected].lastName + ",";
+                    studentInfo += arrayStudent[currentSelected].number + ",";
+                    studentInfo += arrayStudent[currentSelected].area + ",";
+                    studentInfo += arrayStudent[currentSelected].select;                
+                    arrayStudent.splice(currentSelected, 1);
+                    return studentInfo;
+                }
+            }
+
+            function showFirst() {
+                document.getElementById("firstName").value = (arrayStudent[0].firstName);
+                document.getElementById("lastName").value = (arrayStudent[0].lastName);
+                document.getElementById("number").value = (arrayStudent[0].number);
+                document.getElementById("area").value = (arrayStudent[0].area);
+                document.getElementById("isSelected").value = (arrayStudent[0].select);
+            }
+           
+            function showLast() {
+                var studentsSize = arrayStudent.length-1;
+                document.getElementById("firstName").value = (arrayStudent[studentsSize].firstName);
+                document.getElementById("lastName").value = (arrayStudent[studentsSize].lastName);
+                document.getElementById("number").value = (arrayStudent[studentsSize].number);
+                document.getElementById("area").value = (arrayStudent[studentsSize].area);
+                document.getElementById("isSelected").value = (arrayStudent[studentsSize].select);
+                counter = studentsSize;
+            }
+
+            function showPrevious(){
+                var studentsSize = arrayStudent.length;   
+                if(studentsSize > 0 && counter > 0){                       
+                    var currentSelected = counter-1;        
+                    var prev = currentSelected -1;     
+                    document.getElementById("firstName").value = (arrayStudent[prev].firstName);
+                    document.getElementById("lastName").value = (arrayStudent[prev].lastName);
+                    document.getElementById("number").value = (arrayStudent[prev].number);
+                    document.getElementById("area").value = (arrayStudent[prev].area);
+                    document.getElementById("isSelected").value = (arrayStudent[prev].select);
+                    counter--;
+                }
+            }
+            
+            function showNext(){
+                var studentsSize = arrayStudent.length; 
+                if(studentsSize > 0 && counter <= studentsSize){               
+                    var currentSelected = counter-1;
+                    var nxt = currentSelected + 1;
+                    document.getElementById("firstName").value = (arrayStudent[nxt].firstName);
+                    document.getElementById("lastName").value = (arrayStudent[nxt].lastName);
+                    document.getElementById("number").value = (arrayStudent[nxt].number);
+                    document.getElementById("area").value = (arrayStudent[nxt].area);
+                    document.getElementById("isSelected").value = (arrayStudent[nxt].select);
+                    counter++;
+                }
+            }
+
+            function clearAndEnableTextFields(){
+                //enable 
+                document.getElementById('firstName').removeAttribute('disabled');
+                document.getElementById('lastName').removeAttribute('disabled');
+                document.getElementById('number').removeAttribute('disabled');
+                document.getElementById('area').removeAttribute('disabled');
+                document.getElementById('isSelected').removeAttribute('disabled');
+                //reset
+                document.getElementById("firstName").value = "";
+                document.getElementById("lastName").value = "";
+                document.getElementById("number").value = "";
+                document.getElementById("area").value = "";
+                document.getElementById("isSelected").value = "";                                  
+            }
+            
+            function addStudentDetails(){
+                clearAndEnableTextFields();
+                disableAllButtons();
+                document.getElementById("add").disabled = true;
+                document.getElementById('save').removeAttribute('disabled');
+                document.getElementById('cancel').removeAttribute('disabled');
+                isUpdate = false;
+            }
+
+            function selectStudent(){
+                var unselectedStudents = new Array();
+                for(var i=0; i<arrayStudent.length;i++){
+                    if(arrayStudent[i].select !== true){
+                        unselectedStudents.push(arrayStudent[i]);
+                    }
+                }
+                //generate random number based on size of unselected students list
+                var randomSelect = Math.floor(Math.random() * unselectedStudents.length);
+                unselectedStudents[randomSelect].select !== true;
+                var studentInfo = "\nSelected: " + unselectedStudents[randomSelect].firstName + ",";
+                studentInfo += unselectedStudents[randomSelect].lastName + ",";
+                studentInfo += unselectedStudents[randomSelect].number + ",";
+                studentInfo += unselectedStudents[randomSelect].area + ",";
+                studentInfo += unselectedStudents[randomSelect].select; 
+                return studentInfo;
+            }
+          function cancelk(){
+              clearAndEnableTextFields();
+               // disableAllButtons();
+               document.getElementById('add').removeAttribute('disabled');
+                document.getElementById('edit').removeAttribute('disabled');
+                document.getElementById('del').removeAttribute('disabled');
+                document.getElementById('first').removeAttribute('disabled');                
+                document.getElementById('last').removeAttribute('disabled');
+                document.getElementById('prev').removeAttribute('disabled');
+                document.getElementById('next').removeAttribute('disabled');
+                document.getElementById('select').removeAttribute('disabled');
+                 document.getElementById("cancel").disabled = true;                
+                document.getElementById("save").disabled = true;
+                
+              
+          }
+
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <form action="" method="post" name="newStudent">
+                <header> 
+                    <img src="TA_System.jpeg" alt="TA System" height="90" width="950"/>
+                </header>
+                <div class="bodylayout">
+                    <aside class="left-side">
+                        <nav class="top_nav">
+                            <h2>Useful Links</h2>
+                                <ul style="list-style-type:disc">
+                                    <li><a href="http://www.npu.edu/">NPU Website</a></li>
+                                    <li><a href="http://www.google.com/">Google Search</a></li>
+                                    <li><a href="http://www.bing.com/">Bing Search</a></li>
+                                </ul>
+                        </nav>
+                    </aside>
+                    <section class="right-side">
+                        <div class="boxfortable">
+                            <h2> This is a test</h2>
+
+                            <FORM>
+                                <TABLE cellspacing="2" cellpadding="2" border="1" >
+                                    <TR>
+                                        <TD>First Name</TD>
+                                        <TD>
+                                            <INPUT TYPE="TEXT" NAME="firstname" SIZE="35" id="firstName" disabled="disabled">
+                                        </TD>
+                                    </TR>
+                                    <TR>
+                                        <TD>Last Name</TD>
+                                        <TD><INPUT TYPE="TEXT" NAME="lastname" id="lastName" SIZE="35" disabled="disabled"></TD>
+                                    </TR>
+                                    <TR>
+                                        <TD>Student ID</TD>
+                                        <TD><INPUT TYPE="TEXT" NAME="number" id="number" SIZE="35" disabled="disabled"></TD>
+                                    </TR>
+                                    <TR>
+                                        <TD>Area Of Specialization</TD>
+
+                                        <TD><input type="text" name="example" id="area" list="exampleList" SIZE="35" disabled="disabled"><TD>
+                                            <datalist id="exampleList">
+                                                <option value="Programming">
+                                                <option value="Database">
+                                                <option value="Testing">   
+                                                <option value="Networking">
+                                                
+
+                                            </datalist>
+                                    </TR>
+                                    <TR>
+                                        <TD>Selected</TD>
+                                        <TD><INPUT TYPE= "checkbox" NAME="selected" id="isSelected"></TD>
+                                    </TR>
+                                </TABLE>
+
+                            </FORM>  
+                            <hr> 
+
+                            <table style="width:100%">
+                                <div class="boxforbutton">
+                                    <tr>
+
+                                        <td><INPUT id="add" TYPE="button" value="New" onclick="addStudentDetails()"></td>
+                                        <td><INPUT id="edit" TYPE="button" value="Edit" onclick="editInfo()" /></td>
+                                        <td><INPUT id="del" TYPE="button" value="Delete" onclick="var removedStudent = removeStudent();document.newStudent.students.value += removedStudent;"> </td>
+                                        <td><INPUT id="save" TYPE="button" value="Save"
+                                                   onclick="var tempStudents = persistData(document.newStudent.firstname.value,
+                                                               document.newStudent.lastname.value,
+                                                               document.newStudent.number.value,
+                                                               document.newStudent.example.value,
+                                                               document.newStudent.selected.checked);
+                                                               document.newStudent.students.value += tempStudents;" /></td>
+                                        <td><INPUT id="cancel" TYPE="button" value="Cancel" onclick="cancelk()"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><INPUT id="first" TYPE="button" onclick="showFirst()" value="First" ></td>
+                                        <td><INPUT id="prev" TYPE="button" onclick="showPrevious()" value="Previous" > </td>
+                                        <td><INPUT id="next" TYPE="button" onclick="showNext()" value="Next"> </td>
+                                        <td><INPUT id="last" TYPE="button" onclick="showLast()" value="Last"></td>
+                                        <td><INPUT id="select" TYPE="button" onclick="var selStud = selectStudent();
+                                            document.newStudent.students.value += selStud;" value="Select"></td>
+
+
+                                    </tr>
+                                </div>
+                            </table> 
+                            <hr>
+                            <h2>Logs</h2>
+                            </dv>
+                            <p>
+                                <textarea style="width: 389px; height: 200px" name="students" readonly="true"></textarea>
+                            </p>
+                    </section>
+                    <footer class="page_footer">
+                        <h5 style="text-align :center"> © NORTHWESTERN POLYTECHNIC UNIVERSITY,ALL RIGHTS RESERVED</h5>
+                    </footer>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script>
+        disableAllButtons();
+    </script>
+</html>
+
